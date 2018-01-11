@@ -6,11 +6,11 @@ require 'database_leak_finder/logger'
 module DatabaseLeakFinder
   class << self
     def included(base)
-      base.after(:each) do |example|
+      base.append_after(:each) do |example|
         DatabaseLeakFinder::Handler.log_example(example)
       end
 
-      base.after(:all) do
+      base.append_after(:all) do
         DatabaseLeakFinder::Handler.find_leaks
       end
 
